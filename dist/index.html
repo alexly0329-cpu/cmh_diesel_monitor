@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A source-backed view of one Columbus supplier's diesel purchase orders, quantities, and fuel-line amounts.">
+    <title>Columbus Diesel Order Monitor · Public records</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <a class="brand" href="#top" aria-label="Columbus Diesel Order Monitor, top of page">
+          <span class="brand-mark" aria-hidden="true">CD</span>
+          <span class="brand-name">COLUMBUS <span>DIESEL ORDER MONITOR</span></span>
+        </a>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#overview">Overview</a>
+          <a href="#review">Order review</a>
+          <a href="#sources">Sources & limits</a>
+        </nav>
+        <span class="header-label">INDEPENDENT ANALYSIS</span>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="page-title">
+        <div class="shell hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span> COLUMBUS, OHIO <span class="eyebrow-sep" aria-hidden="true">/</span> PUBLIC FUEL RECORDS</p>
+            <h1 id="page-title">See the buying pattern.<br><em>Check the records.</em></h1>
+            <p class="hero-lead">Explore 2026 City of Columbus diesel-coded orders for one supplier: ordered quantities, fuel-line amounts, and invoice records that may need follow-up.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#overview">See buying patterns <span aria-hidden="true">↗</span></a>
+              <a class="text-link" href="#sources">How to read this analysis <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <aside class="hero-fact" aria-label="Data provenance">
+            <span class="fact-kicker">DATA STATUS</span>
+            <div class="fact-status"><span class="status-dot" aria-hidden="true"></span> Official public records</div>
+            <p>City of Columbus purchase orders and vendor invoice journals. No simulated transactions.</p>
+            <div class="fact-rule"></div>
+            <dl>
+              <div><dt>Record year</dt><dd id="hero-year">—</dd></div>
+              <div><dt>Data prepared</dt><dd id="hero-as-of">—</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
+
+      <div class="record-ribbon">
+        <div class="shell ribbon-inner">
+          <span class="ribbon-icon" aria-hidden="true">i</span>
+            <p><strong>Read the labels carefully.</strong> Diesel gallons are inferred from PO quantity and are <em>ordered</em>, not delivered. Invoice totals may cover other fuel and charges on the same order.</p>
+        </div>
+      </div>
+
+      <section class="section overview" id="overview" aria-labelledby="overview-title">
+        <div class="shell">
+          <div class="section-intro">
+            <div>
+              <p class="section-label">01 / PUBLIC BUYER VIEW</p>
+              <h2 id="overview-title">One buyer. One supplier.</h2>
+            </div>
+            <p>One supplier gives us a defined set of orders tied to the same vendor account, so the monthly chart and invoice checks are easier to trace. This is not a total for every Columbus diesel supplier.</p>
+          </div>
+
+          <div class="metrics" aria-label="Data summary">
+            <article class="metric-card"><span class="metric-label">ORDERS IN VIEW</span><strong id="metric-orders">—</strong><span class="metric-note">Public orders containing diesel</span></article>
+            <article class="metric-card"><span class="metric-label">DIESEL GALLONS (INFERRED)</span><strong id="metric-gallons">—</strong><span class="metric-note">Main diesel PO quantities</span></article>
+            <article class="metric-card"><span class="metric-label">DIESEL PO AMOUNT</span><strong id="metric-fuel">—</strong><span class="metric-note">Excludes tax and other fuel lines</span></article>
+          </div>
+
+          <div class="trend-card" aria-labelledby="trend-title">
+            <div class="card-heading">
+              <div><span class="small-label">MAIN CHART</span><h3 id="trend-title">Monthly ordered diesel quantity</h3></div>
+              <span class="chart-unit">Gallons inferred from public PO lines</span>
+            </div>
+            <div id="monthly-chart" class="bar-chart" role="img" aria-label="Monthly ordered fuel trend; loading data"></div>
+            <p id="monthly-insight" class="monthly-insight" hidden></p>
+            <p id="chart-note" class="chart-note">Grouped by the PO line’s listed DeliveryDate, not an actual delivery date or invoice posting month.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section review-section" id="review" aria-labelledby="review-title">
+        <div class="shell">
+          <div class="section-intro">
+            <div><p class="section-label">02 / RECORD REVIEW</p><h2 id="review-title">Open the underlying order.</h2></div>
+            <p>Start with the orders that need follow-up. Open a record to inspect its numbers and public source path.</p>
+          </div>
+
+          <div class="review-actions">
+            <p id="review-summary" class="review-summary" aria-live="polite">Loading review candidates…</p>
+            <button id="open-all-orders" class="all-orders-button" type="button" disabled>View all <span id="all-order-count">—</span> orders <span aria-hidden="true">↗</span></button>
+          </div>
+          <p class="match-note review-match-note" id="match-note" aria-live="polite">Checking posted invoice matches…</p>
+
+          <div class="table-wrap">
+            <table>
+              <caption class="visually-hidden">Diesel purchase orders with review reasons</caption>
+              <thead><tr><th scope="col">Purchase order</th><th scope="col">Listed line date</th><th scope="col" class="numeric">Diesel qty (gal inferred)</th><th scope="col" class="numeric">Diesel PO amount</th><th scope="col" class="numeric">Posted invoice total</th><th scope="col">Review status</th><th scope="col"><span class="visually-hidden">Action</span></th></tr></thead>
+              <tbody id="review-rows"><tr><td colspan="7" class="table-message">Loading public records…</td></tr></tbody>
+            </table>
+          </div>
+          <p class="table-footnote">A flagged row has no matching entry in the loaded 2026 invoice journal. It may appear in another year. This is not a confirmed invoice error or a claim against a supplier.</p>
+        </div>
+      </section>
+
+      <section class="section sources-section" id="sources" aria-labelledby="sources-title">
+        <div class="shell">
+          <div class="section-intro">
+            <div><p class="section-label">03 / EVIDENCE</p><h2 id="sources-title">Sources and limits.</h2></div>
+            <p>Every figure is tied to a public file or official document. The review rules are deliberately conservative.</p>
+          </div>
+          <div class="contract-band">
+            <div class="contract-primary">
+              <span class="small-label">PUBLIC AWARD CONTEXT</span>
+              <h3 id="contract-name">City of Columbus diesel and biodiesel purchasing</h3>
+              <p id="contract-description">The 2025 award names the supplier; the 2026 authorization names agreement PA008056. Public PO rows do not identify an agreement per order.</p>
+            </div>
+            <dl class="contract-facts">
+              <div><dt>Agreement</dt><dd id="contract-id">PA008056</dd></div>
+              <div><dt>Term ends</dt><dd id="contract-end">Sep 30, 2027</dd></div>
+              <div><dt>Scope</dt><dd>Columbus fleet fuel</dd></div>
+            </dl>
+            <div class="contract-links">
+              <a class="contract-source" id="contract-link" href="https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&amp;GUID=E32AE369-3AFA-4D83-8652-ADF077FCE64D&amp;ID=7444913" target="_blank" rel="noopener noreferrer">2025 award record <span aria-hidden="true">↗</span></a>
+              <a class="contract-source" id="contract-authorization-link" href="https://columbus.legistar.com/LegislationDetail.aspx?GUID=B7CCB628-B1C1-4036-917A-525C92C3DE0D&amp;ID=7923564" target="_blank" rel="noopener noreferrer">2026 authorization <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+          <div class="evidence-grid">
+            <div class="evidence-card">
+              <span class="small-label">PRIMARY RECORDS</span>
+              <h3>Where the data comes from</h3>
+              <ul id="source-list" class="source-list">
+                <li><a href="https://www.columbusauditor.org/Data-Hub/" target="_blank" rel="noopener noreferrer">City Auditor Data Hub <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=E32AE369-3AFA-4D83-8652-ADF077FCE64D&ID=7444913" target="_blank" rel="noopener noreferrer">City Council award record <span aria-hidden="true">↗</span></a></li>
+                <li><a href="https://www.columbusauditor.org/Data-Hub/Data-Entity-Diagram/" target="_blank" rel="noopener noreferrer">Published data relationship map <span aria-hidden="true">↗</span></a></li>
+              </ul>
+            </div>
+            <div class="evidence-card evidence-card-dark">
+              <span class="small-label">INTERPRETATION RULES</span>
+              <h3>What this can establish</h3>
+              <ul class="limits-list">
+                <li>The PO export has no unit field. Main diesel quantities are interpreted as ordered gallons from the product and bid context; they do not prove delivery.</li>
+                <li>Posted invoice totals cover all lines on the PO, including tax, additives, or other fuels.</li>
+                <li>The public files do not include bills of lading, scanned invoices, or the proprietary daily contract index.</li>
+                <li>Review candidates indicate a record question, not proven overbilling or recovered savings.</li>
+              </ul>
+            </div>
+          </div>
+          <details class="method-details"><summary>How the records are connected <span aria-hidden="true">+</span></summary><p>Orders are selected by vendor account and diesel product; the public PO export does not carry the agreement ID, so the link to the award is contextual. PO lines are grouped by PO ID. Posted invoice journals join on PO ID, and amounts are counted once per distinct invoice and PO pair. The comparison uses all PO lines, including tax and biodiesel when present. “No match” means no invoice entry appeared in the loaded 2026 file; it may appear in another year.</p></details>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><div class="shell footer-inner"><span>COLUMBUS DIESEL ORDER MONITOR</span><span>Independent analysis of public records · No affiliation with the city or any fuel supplier.</span><a href="#top">Back to top ↑</a></div></footer>
+
+    <dialog id="all-orders-dialog" class="all-orders-dialog" aria-labelledby="all-dialog-title">
+      <div class="dialog-topline"><span class="small-label">COMPLETE RECORD SET</span><button type="button" id="all-dialog-close" class="close-button" aria-label="Close all orders">×</button></div>
+      <div class="all-orders-content">
+        <div class="all-dialog-intro"><h2 id="all-dialog-title">All selected orders</h2><p>Search the selected order set, then inspect any record and its public source files.</p></div>
+        <div class="review-toolbar">
+          <label class="search-field" for="all-order-search">
+            <span class="search-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Search purchase order or invoice ID</span>
+            <input id="all-order-search" type="search" placeholder="Search PO or invoice ID" autocomplete="off" autofocus>
+          </label>
+          <label class="filter-field" for="all-review-filter"><span>Show</span>
+            <select id="all-review-filter"><option value="all">All records</option><option value="review">Review candidates</option><option value="clear">No flag</option></select>
+          </label>
+          <span id="all-result-count" class="result-count" aria-live="polite">Loading records…</span>
+        </div>
+        <nav class="pagination" aria-label="All order pages">
+          <button id="all-prev-page" class="page-button" type="button" disabled>← Previous</button>
+          <span id="all-page-count" class="page-count" aria-live="polite">Page — of —</span>
+          <button id="all-next-page" class="page-button" type="button" disabled>Next →</button>
+        </nav>
+        <div class="table-wrap">
+          <table>
+            <caption class="visually-hidden">Selected diesel purchase orders and posted invoice journals</caption>
+            <thead><tr><th scope="col">Purchase order</th><th scope="col">Listed line date</th><th scope="col" class="numeric">Diesel qty (gal inferred)</th><th scope="col" class="numeric">Diesel PO amount</th><th scope="col" class="numeric">Posted invoice total</th><th scope="col">Review status</th><th scope="col"><span class="visually-hidden">Action</span></th></tr></thead>
+            <tbody id="all-order-rows"><tr><td colspan="7" class="table-message">Loading public records…</td></tr></tbody>
+          </table>
+        </div>
+        <p class="table-footnote">Posted invoice totals may include other fuel and charges on the same PO. Listed line dates are not proof of delivery.</p>
+      </div>
+    </dialog>
+
+    <dialog id="order-dialog" class="detail-dialog" aria-labelledby="dialog-title">
+      <div class="dialog-topline"><span class="small-label">ORDER RECORD</span><button type="button" id="dialog-close" class="close-button" aria-label="Close order details">×</button></div>
+      <div id="dialog-content"></div>
+    </dialog>
+  </body>
+</html>
