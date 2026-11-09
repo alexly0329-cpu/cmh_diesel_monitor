@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Columbus Diesel Order Monitor</title>
+<meta name="description" content="An independent case study of one public buyer's diesel purchasing: the City of Columbus's 2026 orders to one supplier, traced to public invoice records.">
+<meta name="theme-color" content="#0b1a20">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23244c5a'/%3E%3Crect x='6' y='16' width='5' height='10' rx='1.5' fill='%2378BE21'/%3E%3Crect x='13.5' y='9' width='5' height='17' rx='1.5' fill='%232CCCD3'/%3E%3Crect x='21' y='13' width='5' height='13' rx='1.5' fill='%2378BE21'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.17/dist/lenis.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.css">
+<link rel="stylesheet" href="styles.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<!-- reusable scene art, drawn once, referenced by the hero layers and the snapshot band -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#081419"/><stop offset=".38" stop-color="#16394a"/><stop offset=".68" stop-color="#4f8da0"/><stop offset=".86" stop-color="#e9b07a"/><stop offset="1" stop-color="#ff9a4d"/></linearGradient>
+    <radialGradient id="sun" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffd9a0" stop-opacity=".95"/><stop offset=".35" stop-color="#ff9a4d" stop-opacity=".45"/><stop offset="1" stop-color="#ff9a4d" stop-opacity="0"/></radialGradient>
+    <radialGradient id="flame" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#fff2c0"/><stop offset=".4" stop-color="#ff9a4d"/><stop offset="1" stop-color="#ff7500" stop-opacity="0"/></radialGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#ffd9a0" stop-opacity=".55"/><stop offset="1" stop-color="#ffd9a0" stop-opacity="0"/></linearGradient>
+
+    <g id="art-sky">
+      <rect width="1600" height="900" fill="url(#sky)"/>
+      <ellipse cx="1060" cy="700" rx="520" ry="330" fill="url(#sun)"/>
+      <g fill="#fff" opacity=".7"><circle cx="140" cy="90" r="1.6"/><circle cx="330" cy="150" r="1.2"/><circle cx="520" cy="60" r="1.5"/><circle cx="760" cy="120" r="1"/><circle cx="980" cy="70" r="1.6"/><circle cx="1210" cy="140" r="1.2"/><circle cx="1420" cy="80" r="1.5"/><circle cx="1530" cy="190" r="1"/><circle cx="60" cy="230" r="1"/><circle cx="640" cy="230" r="1.2"/></g>
+      <g fill="#fff" opacity=".07"><ellipse cx="300" cy="420" rx="360" ry="22"/><ellipse cx="1180" cy="360" rx="420" ry="18"/><ellipse cx="760" cy="520" rx="300" ry="14"/></g>
+    </g>
+
+    <g id="art-far">
+      <path d="M0 690 C180 640 340 676 520 650 S860 626 1020 656 S1360 630 1600 668 V900 H0Z" fill="#1b4150"/>
+      <g fill="#173845">
+        <rect x="1190" y="470" width="14" height="210"/><rect x="1236" y="500" width="10" height="180"/><rect x="1280" y="450" width="16" height="230"/>
+        <rect x="1160" y="610" width="190" height="70"/><rect x="1370" y="560" width="70" height="120"/>
+      </g>
+      <circle cx="1287" cy="446" r="18" fill="url(#flame)"/>
+      <g fill="#ffcf8a" opacity=".85"><circle cx="1180" cy="640" r="2"/><circle cx="1215" cy="650" r="2"/><circle cx="1260" cy="640" r="2"/><circle cx="1320" cy="650" r="2"/><circle cx="1395" cy="600" r="2"/></g>
+    </g>
+
+    <g id="art-mid">
+      <path d="M0 740 C220 720 520 735 800 722 S1300 735 1600 724 V900 H0Z" fill="#0f3340"/>
+      <g fill="#0c2a35">
+        <rect x="90" y="610" width="210" height="130" rx="6"/><ellipse cx="195" cy="610" rx="105" ry="16"/>
+        <rect x="330" y="640" width="160" height="100" rx="6"/><ellipse cx="410" cy="640" rx="80" ry="12"/>
+        <rect x="520" y="560" width="26" height="180"/><rect x="560" y="520" width="22" height="220"/><rect x="598" y="580" width="26" height="160"/>
+        <rect x="640" y="650" width="170" height="90" rx="5"/><ellipse cx="725" cy="650" rx="85" ry="11"/>
+      </g>
+      <g stroke="#2d6275" stroke-width="2" opacity=".7"><path d="M90 640h210M330 665h160M640 672h170"/><path d="M533 580h-6M533 620h-6M533 660h-6M571 560h-6M571 610h-6M571 660h-6"/></g>
+      <path d="M520 585 L598 585 M545 540 L598 540" stroke="#2d6275" stroke-width="3" opacity=".6"/>
+      <circle cx="571" cy="514" r="12" fill="url(#flame)"/>
+      <g fill="#ffcf8a"><circle cx="200" cy="640" r="2"/><circle cx="420" cy="660" r="2"/><circle cx="730" cy="668" r="2"/><circle cx="533" cy="566" r="2"/></g>
+    </g>
+
+    <g id="art-fore">
+      <path d="M0 800 C300 776 720 796 1100 780 S1500 794 1600 786 V900 H0Z" fill="#071318"/>
+      <path d="M0 842 C400 826 900 836 1600 822 V900 H0Z" fill="#050e12"/>
+      <path d="M-20 830 L1620 812" stroke="#ffd9a0" stroke-width="2" stroke-dasharray="46 40" opacity=".25"/>
+      <g>
+        <path d="M1560 800 h-60" stroke="url(#beam)" stroke-width="0"/>
+        <polygon points="1010,792 330,830 330,776" fill="url(#beam)" opacity=".5" transform="translate(0 0)"/>
+        <rect x="1010" y="716" width="262" height="66" rx="33" fill="#0a1d25"/>
+        <rect x="1010" y="716" width="262" height="14" rx="7" fill="#1f4a5a" opacity=".6"/>
+        <path d="M1284 724h58l26 28v30h-84z" fill="#0a1d25"/>
+        <path d="M1318 732h24l16 20h-40z" fill="#4f8da0" opacity=".55"/>
+        <rect x="996" y="778" width="388" height="12" rx="3" fill="#06141a"/>
+        <circle cx="1062" cy="792" r="17" fill="#030a0d"/><circle cx="1122" cy="792" r="17" fill="#030a0d"/><circle cx="1214" cy="792" r="17" fill="#030a0d"/><circle cx="1338" cy="792" r="17" fill="#030a0d"/>
+        <circle cx="1062" cy="792" r="6" fill="#244c5a"/><circle cx="1122" cy="792" r="6" fill="#244c5a"/><circle cx="1214" cy="792" r="6" fill="#244c5a"/><circle cx="1338" cy="792" r="6" fill="#244c5a"/>
+        <circle cx="1376" cy="768" r="5" fill="#ffd9a0"/>
+        <rect x="1100" y="738" width="70" height="26" rx="4" fill="#78BE21" opacity=".85"/>
+      </g>
+      <g stroke="#0c242d" stroke-width="5"><path d="M180 810V690M180 696h38"/><path d="M640 818V706M640 712h38"/></g>
+      <g fill="#ffd9a0"><circle cx="220" cy="698" r="5"/><circle cx="680" cy="714" r="5"/></g>
+      <g fill="#050e12"><path d="M20 850q8-40 16 0zM60 856q10-52 20 0zM1500 852q8-44 16 0zM1550 858q10-56 20 0z"/></g>
+    </g>
+  </defs>
+</svg>
+
+<div class="stripe"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav" data-theme="dark" aria-label="Primary">
+  <div class="nav__bg"></div>
+  <div class="nav__in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 32 32" width="34" height="34" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#244c5a"/><rect x="6" y="16" width="5" height="10" rx="1.5" fill="#78BE21"/><rect x="13.5" y="9" width="5" height="17" rx="1.5" fill="#2CCCD3"/><rect x="21" y="13" width="5" height="13" rx="1.5" fill="#78BE21"/></svg>
+      <span>Diesel Order Monitor</span>
+    </a>
+    <div class="nav__links" id="navLinks">
+      <a href="#orders">Orders</a>
+      <a href="#featured">Largest</a>
+      <a href="#about">Method</a>
+      <a href="#months">Months</a>
+      <a href="#sources">Sources</a>
+      <a class="btn btn--primary nav__cta" href="#orders">Explore orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="page" id="page">
+
+<!-- HERO + PARALLAX -->
+<header class="hero" data-theme="dark" id="top">
+  <section class="parallax__header" data-parallax-layers>
+    <div class="layers" aria-hidden="true">
+      <svg class="layer" data-parallax-layer="3" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice"><use href="#art-sky"/></svg>
+      <svg class="layer" data-parallax-layer="1" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice"><use href="#art-far"/></svg>
+      <svg class="layer" data-parallax-layer="2" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice"><use href="#art-mid"/></svg>
+      <svg class="layer" data-parallax-layer="4" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice"><use href="#art-fore"/></svg>
+    </div>
+    <div class="hero__shade"></div>
+    <div class="hero__copy">
+      <p class="hero__eyebrow" data-hero>Columbus diesel monitor — public records, one supplier.</p>
+      <h1 data-hero><span class="ln"><span>One buyer. One supplier.</span></span> <span class="ln"><span>Every diesel order traced.</span></span></h1>
+      <p class="hero__lead" data-hero>An independent case study of the City of Columbus's 2026 diesel-coded purchasing: monthly ordered quantities, recorded fuel-line amounts, and a check of each order against its posted invoice.</p>
+      <div class="btnrow" data-hero>
+        <a class="btn btn--primary" href="#orders">Explore the orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+        <a class="btn btn--light" href="#about">How it works <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+    </div>
+    <a class="story" href="#snapshot" data-hero>
+      <span class="story__art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="story__txt"><b>The snapshot</b><small><i class="dot" data-dot></i><span data-asof>Data as of Nov 5, 2026</span></small></span>
+    </a>
+  </section>
+
+  <section class="parallax__content" id="categories">
+    <div class="wrap">
+      <div class="cats">
+        <a class="cat cat--a" href="#orders" data-filter="all" data-r>
+          <div class="cat__art" aria-hidden="true"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><use href="#art-sky"/><use href="#art-mid"/><use href="#art-fore"/></svg></div>
+          <div class="cat__in"><h2>Matched orders <span class="badge" data-bind="matched">332</span></h2><p>Orders whose purchase-order total lines up with a posted invoice journal in the City's 2026 file.</p></div>
+        </a>
+        <a class="cat cat--b" href="#orders" data-filter="review" data-r>
+          <div class="cat__art" aria-hidden="true"><svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice"><use href="#art-sky"/><use href="#art-far"/><use href="#art-fore"/></svg></div>
+          <div class="cat__in"><h2>Follow-up records <span class="badge" data-bind="review">16</span></h2><p>No invoice found in the loaded file. A flag means check the record, not a billing error.</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
+</header>
+
+<main>
+<!-- ORDER EXPLORER  (light panel + embedded tool, like the fitter finder) -->
+<section class="sec sec--light" data-theme="light" id="orders">
+  <div class="wrap">
+    <div class="panel panel--grey split">
+      <div class="tool" data-r>
+        <div class="tool__bar">
+          <b>Order explorer</b>
+          <div class="seg" role="group" aria-label="Filter orders">
+            <button type="button" data-f="all" aria-pressed="true">All <span data-bind="orders">348</span></button>
+            <button type="button" data-f="review" aria-pressed="false">Follow-up <span data-bind="review">16</span></button>
+          </div>
+        </div>
+        <label class="search"><span class="sr">Search orders</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="5.5"/><path d="m13.5 13.5 4 4"/></svg>
+          <input id="q" type="search" placeholder="Search PO number, month or mode…" autocomplete="off">
+        </label>
+        <ul class="rows" id="rows" aria-live="polite"><li class="rows__empty">Loading orders…</li></ul>
+        <div class="pager"><span id="pageInfo">—</span><div><button type="button" id="prev" aria-label="Previous page">←</button><button type="button" id="next" aria-label="Next page">→</button></div></div>
+      </div>
+      <div class="split__txt" data-r>
+        <h2>Find the orders that need a second look.</h2>
+        <p>Search every selected order, or filter to the 16 with no matching invoice. Click a row to open its source lines.</p>
+        <p class="small">Sorted newest listed PO-line date first. That date is not proof of physical delivery.</p>
+        <a class="btn btn--primary" href="#months">See the monthly pattern <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CAROUSEL -->
+<section class="sec sec--white" data-theme="light" id="featured">
+  <div class="wrap">
+    <div class="sec__head" data-r>
+      <h2>The largest orders of 2026.</h2>
+      <a class="btn btn--primary" href="#orders">View all orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="benefits" data-r>
+      <div class="swiper" id="swiper"><div class="swiper-wrapper" id="slides"></div></div>
+      <div class="benefits__ctl">
+        <div class="swiper-scrollbar" id="sbar"></div>
+        <div class="benefits__btns"><button class="arrow is-prev" aria-label="Previous">←</button><button class="arrow is-next" aria-label="Next">→</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / METHOD -->
+<section class="sec sec--dark about" data-theme="dark" id="about">
+  <div class="wrap about__grid">
+    <div class="about__l" data-r>
+      <div class="receipt">
+        <h4>City record</h4><div class="receipt__id">PO585255</div>
+        <div class="row"><span>Diesel line · qty 503</span><span>$2,152.94</span></div>
+        <div class="row"><span>Tax line</span><span>$399.00</span></div>
+        <div class="row tot"><span>PO total</span><span>$2,551.94</span></div>
+        <div class="row"><span>Invoice 118456COC26</span><span>$2,551.76</span></div>
+        <div class="row"><span>Accounting component</span><span>$398.82</span></div>
+        <div class="gap">$0.18 below the PO tax line. The public row doesn't say why, so it is shown, not judged.</div>
+      </div>
+      <a class="btn btn--primary" href="#sources">Our sources <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="about__r">
+      <h2 data-r class="sr-only-lg">Built to be checked.</h2>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h11l3 3v13H5zM9 11h6M9 15h6"/></svg><div><h3>Public records only</h3><p>Everything comes from the City Auditor's Data Hub: purchase-order lines, invoice journals and accounting distributions. No private feeds, no API key.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg><div><h3>One supplier, fully traced</h3><p>Vendor account 002166 only, so each selected order can be followed into its invoice. It is not a total of Columbus diesel buying or a supplier comparison.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 20V5M6 5h11l-2 4 2 4H6"/></svg><div><h3>Flags, not accusations</h3><p>A flag means the records differ, or a match is missing, within the loaded files. The review threshold is $25 on the full order total. No matched order crosses it.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 7v5c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg><div><h3>Limits stated up front</h3><p>The award (PA008056, to Sept 30, 2027) is context, not proof an order used it. No bills of lading or daily contract index, so delivery and final per-gallon charge are unverified.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- MONTHS  (light panel + embedded tool on the right, like the configurator) -->
+<section class="sec sec--light" data-theme="light" id="months">
+  <div class="wrap">
+    <div class="panel panel--grey split split--rev">
+      <div class="split__txt" data-r>
+        <h2>Build your own view of the year.</h2>
+        <p>Pick a measure, then a month. Figures cover listed PO-line dates January through October 2026. The year is in progress, so these are snapshot counts, not full-year totals.</p>
+        <a class="btn btn--primary" href="#snapshot">The snapshot in numbers <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+      <div class="tool tool--chart" data-r>
+        <div class="tool__bar"><b>Monthly buying</b>
+          <div class="seg" role="group" aria-label="Measure">
+            <button type="button" data-m="ordered_gallons" aria-pressed="true">Gallons</button>
+            <button type="button" data-m="po_fuel_amount" aria-pressed="false">Fuel $</button>
+            <button type="button" data-m="orders_count" aria-pressed="false">Orders</button>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+        <div class="months" id="monthLabels" aria-hidden="true"></div>
+        <div class="mdetail" id="mdetail" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SNAPSHOT (full-bleed band, like the video section) -->
+<header class="snap" data-theme="dark" id="snapshot">
+  <svg class="snap__art" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><use href="#art-sky"/><use href="#art-far"/><use href="#art-mid"/><use href="#art-fore"/></svg>
+  <div class="snap__shade"></div>
+  <div class="wrap snap__in">
+    <p class="eyebrow-l">Snapshot · <span data-asof>Nov 5, 2026</span></p>
+    <h2 id="snapHead">348 purchase orders. <span>379,459 gallons.</span> One supplier.</h2>
+    <div class="snap__stats">
+      <div><b data-count="348" data-bind="orders">348</b><span>supplier purchase orders</span></div>
+      <div><b data-count="379459">379,459</b><span>diesel gallons ordered</span></div>
+      <div><b>$<span data-count="1.46" data-dec="2">1.46</span>M</b><span>in diesel fuel-line amounts</span></div>
+      <div><b><span data-count="95.4" data-dec="1">95.4</span>%</b><span>matched to an invoice</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- REBUILD CTA -->
+<header class="sec sec--dark build" data-theme="dark" id="rebuild">
+  <div class="wrap build__grid">
+    <div data-r>
+      <h2>Rebuild the numbers yourself.</h2>
+      <p>Python 3 and a network connection. The script downloads the current public CSVs, rebuilds <code>data.json</code> and every figure on this page follows.</p>
+      <div class="btnrow"><a class="btn btn--primary" href="https://github.com/alexly0329-cpu/cmh_diesel_monitor" rel="noopener">Open the repository <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a></div>
+    </div>
+    <pre class="term" data-r aria-label="Commands"><span class="c"># rebuild the data</span>
+python3 src/build_data.py
+
+<span class="c"># serve it</span>
+python3 -m http.server 8000 --directory dist
+
+<span class="c"># check the joins</span>
+python3 -m unittest discover -s tests -v</pre>
+  </div>
+</header>
+
+<!-- SOURCES / CONTACT -->
+<section class="sec sec--light" data-theme="light" id="sources">
+  <div class="wrap src">
+    <div class="src__l" data-r>
+      <h2>Check it against the record.</h2>
+      <p class="live"><i class="dot" data-dot></i><span data-fresh>Snapshot retrieved Nov 5, 2026</span></p>
+      <p>Every figure carries source IDs. Open the public files, the bid notice and the council ordinances behind the story.</p>
+    </div>
+    <div class="src__list" data-r>
+      <a href="https://www.columbusauditor.org/Data-Hub/" rel="noopener"><small>Data</small><div><strong>City Auditor Data Hub</strong><span>PO lines, invoice journals, accounting distributions</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://www.columbus.gov/files/sharedassets/city/v/1/city-council/documents/city-bulletins/2025/bulletin20250517_1.pdf" rel="noopener"><small>Bid</small><div><strong>RFQ030275 bid notice</strong><span>About 600,000 gal/yr across three diesel products · May 17, 2025</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=E32AE369-3AFA-4D83-8652-ADF077FCE64D&ID=7444913" rel="noopener"><small>Award</small><div><strong>Ordinance 1557-2025</strong><span>Fuel option contract award · July 2, 2025</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://columbus.legistar.com/LegislationDetail.aspx?G=4F637594-17B0-4E92-8196-37F14328D337&GUID=B7CCB628-B1C1-4036-917A-525C92C3DE0D&ID=7923564" rel="noopener"><small>Funding</small><div><strong>Ordinance 0324-2026</strong><span>Fuel purchase authorization, PA008056 · Feb 25, 2026</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
+</div><!-- /page -->
+
+<!-- reveal footer -->
+<footer class="foot" data-theme="dark">
+  <div class="wrap foot__in">
+    <div class="foot__top">
+      <div class="foot__col"><h4>Explore</h4><a href="#orders">Order explorer</a><a href="#featured">Largest orders</a><a href="#months">Monthly view</a></div>
+      <div class="foot__col"><h4>Understand</h4><a href="#about">Method</a><a href="#snapshot">Snapshot</a><a href="#sources">Sources</a></div>
+      <div class="foot__col"><h4>Project</h4><a href="https://github.com/alexly0329-cpu/cmh_diesel_monitor" rel="noopener">GitHub</a><a href="https://www.columbusauditor.org/Data-Hub/" rel="noopener">City Data Hub</a></div>
+    </div>
+    <div class="foot__big" aria-hidden="true">Columbus Diesel<br>Order Monitor</div>
+    <div class="foot__legal"><span>Independent portfolio case study. Not affiliated with the City of Columbus, any fuel supplier or producer, or any company whose site inspired the design.</span><span>Data as of <span data-asof>Nov 5, 2026</span></span></div>
+  </div>
+</footer>
+
+<!-- record dialog -->
+<dialog class="dlg" id="dlg" aria-labelledby="dlgTitle">
+  <form method="dialog"><button class="dlg__x" aria-label="Close">✕</button></form>
+  <div id="dlgBody"></div>
+</dialog>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.17/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8.4.7/swiper-bundle.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
