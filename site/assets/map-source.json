@@ -1,0 +1,11 @@
+{
+  "file": "columbus-aerial.jpg",
+  "source": "https://imagery.nationalmap.gov/arcgis/rest/services/USGSNAIPPlus/ImageServer/exportImage?bbox=-83.120%2C39.910%2C-82.880%2C40.035&bboxSR=4326&imageSR=3857&size=2000%2C1400&format=jpg&f=image",
+  "attribution": "USGS The National Map / USDA National Agriculture Imagery Program",
+  "bbox_wgs84": [
+    -83.12,
+    39.91,
+    -82.88,
+    40.035
+  ]
+}

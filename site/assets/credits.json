@@ -1,0 +1,29 @@
+[
+  {
+    "file": "ash-cave.jpg",
+    "title": "Ash Cave, Hocking Hills, Ohio",
+    "source": "https://commons.wikimedia.org/wiki/File:Ash_Cave_(29764816394).jpg",
+    "artist": "See1,Do1,Teach1",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "changes": "Web-sized source thumbnail, displayed with CSS cropping. No generative alteration."
+  },
+  {
+    "file": "brandywine-falls.jpg",
+    "title": "Brandywine Falls, Cuyahoga Valley National Park, Ohio",
+    "source": "https://commons.wikimedia.org/wiki/File:Brandywine_Falls_at_Cuyahoga_Valley_National_Park2.jpg",
+    "artist": "Erik Drost",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "changes": "Web-sized source thumbnail, displayed with CSS cropping. No generative alteration."
+  },
+  {
+    "file": "lake-erie.jpg",
+    "title": "Sunset over Lake Erie near Cleveland, Ohio",
+    "source": "https://commons.wikimedia.org/wiki/File:Sunset_over_Lake_Erie_near_Cleveland.jpg",
+    "artist": "Pbalson8204",
+    "license": "Public domain",
+    "license_url": "https://creativecommons.org/publicdomain/mark/1.0/",
+    "changes": "Web-sized source thumbnail, displayed with CSS cropping. No generative alteration."
+  }
+]

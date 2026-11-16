@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Columbus Diesel Order Monitor</title>
+<meta name="description" content="An independent case study of one public buyer's diesel purchasing: the City of Columbus's 2026 orders to one supplier, traced to public invoice records.">
+<meta name="theme-color" content="#0b1a20">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%230b1a20'/%3E%3Cg fill='none' stroke-width='5.2'%3E%3Cpath d='M30.72 11A14 14 0 0 0 17.57 6.21' stroke='%2378BE21'/%3E%3Cpath d='M17.57 6.21A14 14 0 0 0 6 20' stroke='%23009B77'/%3E%3Cpath d='M6 20A14 14 0 0 0 17.57 33.79' stroke='%232CCCD3'/%3E%3Cpath d='M17.57 33.79A14 14 0 0 0 30.72 29' stroke='%23FF7500'/%3E%3C/g%3E%3Cpath d='M20 13.4c3.2 4.3 4.8 6.9 4.8 9.4a4.8 4.8 0 0 1-9.6 0c0-2.5 1.6-5.1 4.8-9.4z' fill='%23fff'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="vendor/lenis.css">
+<link rel="stylesheet" href="vendor/swiper-bundle.min.css">
+<link rel="stylesheet" href="styles.css">
+<script src="theme.js"></script>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+
+<div class="stripe"></div>
+
+<!-- NAV -->
+<nav class="nav" id="nav" data-theme="dark" aria-label="Primary">
+  <div class="nav__bg"></div>
+  <div class="nav__in">
+    <a class="brand" href="#top" aria-label="Columbus Diesel Order Monitor, home">
+      <svg class="brand__mark" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><g fill="none" stroke-width="5.2"><path d="M30.72 11A14 14 0 0 0 17.57 6.21" stroke="#78BE21"/><path d="M17.57 6.21A14 14 0 0 0 6 20" stroke="#009B77"/><path d="M6 20A14 14 0 0 0 17.57 33.79" stroke="#2CCCD3"/><path d="M17.57 33.79A14 14 0 0 0 30.72 29" stroke="#FF7500"/></g><path d="M20 13.4c3.2 4.3 4.8 6.9 4.8 9.4a4.8 4.8 0 0 1-9.6 0c0-2.5 1.6-5.1 4.8-9.4z" fill="currentColor"/></svg>
+      <span class="brand__txt"><b>Columbus Diesel</b><small>Order Monitor</small></span>
+    </a>
+    <div class="nav__links" id="navLinks">
+      <a href="#orders">Orders</a>
+      <a href="#about">Method</a>
+      <a href="#months">Months</a>
+      <a href="#sources">Sources</a>
+      <a class="btn btn--primary nav__cta" href="#orders">Explore orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="nav__actions"><button class="theme-toggle" id="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Dark mode"><span class="theme-light" aria-hidden="true">☀ Light</span><span class="theme-dark" aria-hidden="true">☾ Dark</span></button>
+    <button class="nav__burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks"><span></span><span></span></button></div>
+  </div>
+</nav>
+
+<div class="page" id="page">
+
+<!-- HERO + PARALLAX -->
+<header class="hero" data-theme="dark" id="top">
+  <section class="parallax__header" data-parallax-layers>
+    <div class="layers" aria-hidden="true">
+      <img class="layer map-image" data-parallax-layer="1" src="assets/columbus-aerial.jpg" alt="" width="2000" height="1400" fetchpriority="high">
+      <div class="layer map-grid" data-parallax-layer="2"></div>
+      <div class="layer map-place" data-parallax-layer="3"><span>Columbus, Ohio<small>39.9612° N / 82.9988° W</small></span></div>
+      <div class="layer map-vignette" data-parallax-layer="4"></div>
+    </div>
+    <div class="hero__shade"></div>
+    <div class="hero__copy">
+      <p class="hero__eyebrow" data-hero>Columbus diesel monitor — public records, one supplier.</p>
+      <h1 data-hero><span class="ln"><span>One buyer. One supplier.</span></span> <span class="ln"><span>Every diesel order traced.</span></span></h1>
+      <p class="hero__lead" data-hero>See Columbus’s diesel orders, fuel costs and invoice matches. One supplier. Public records.</p>
+      <div class="btnrow" data-hero>
+        <a class="btn btn--primary" href="#orders">Explore the orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+        <a class="btn btn--light" href="#about">How it works <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+    </div>
+    <a class="story" href="#snapshot" data-hero>
+      <span class="story__art" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="story__txt"><b>The snapshot</b><small><i class="dot" data-dot></i><span data-asof>Data as of Nov 5, 2026</span></small></span>
+    </a>
+    <div class="map-credit">Geographic context only · <a href="credits.html">Imagery: USGS / USDA</a></div>
+  </section>
+
+  <section class="parallax__content" id="categories">
+    <div class="wrap">
+      <div class="cats">
+        <a class="cat cat--a" href="#orders" data-filter="all" data-r>
+          <div class="cat__art" aria-hidden="true"><img src="assets/ash-cave.jpg" alt="" loading="lazy"></div>
+          <div class="cat__in"><h2>Matched orders <span class="badge" data-bind="matched">332</span></h2><p>Orders linked to a posted invoice in the City’s records.</p></div>
+        </a>
+        <a class="cat cat--b" href="#orders" data-filter="review" data-r>
+          <div class="cat__art" aria-hidden="true"><img src="assets/brandywine-falls.jpg" alt="" loading="lazy"></div>
+          <div class="cat__in"><h2>Follow-up records <span class="badge" data-bind="review">16</span></h2><p>No invoice found in the loaded file. A flag means check the record, not a billing error.</p></div>
+        </a>
+      </div>
+    </div>
+  </section>
+</header>
+
+<main>
+<!-- ORDER EXPLORER  (light panel + embedded tool, like the fitter finder) -->
+<section class="sec sec--light" data-theme="light" id="orders">
+  <div class="wrap">
+    <div class="panel panel--grey split">
+      <div class="tool" data-r>
+        <div class="tool__bar">
+          <b>Order explorer</b>
+          <div class="seg" role="group" aria-label="Filter orders">
+            <button type="button" data-f="all" aria-pressed="true">All <span data-bind="orders">348</span></button>
+            <button type="button" data-f="review" aria-pressed="false">Follow-up <span data-bind="review">16</span></button>
+          </div>
+        </div>
+        <label class="search"><span class="sr">Search orders</span>
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="9" r="5.5"/><path d="m13.5 13.5 4 4"/></svg>
+          <input id="q" type="search" placeholder="Search PO number, month or mode…" autocomplete="off">
+        </label>
+        <ul class="rows" id="rows" aria-live="polite"><li class="rows__empty">Loading orders…</li></ul>
+        <div class="pager"><span id="pageInfo">—</span><div><button type="button" id="prev" aria-label="Previous page">←</button><button type="button" id="next" aria-label="Next page">→</button></div></div>
+      </div>
+      <div class="split__txt" data-r>
+        <h2>Find the orders that need a second look.</h2>
+        <p>Search <span data-bind="orders">348</span> orders. Filter the <span data-bind="unmatched">16</span> missing invoice matches. Open any record to see the source lines.</p>
+        <p class="small">Sorted newest listed PO-line date first. That date is not proof of physical delivery.</p>
+        <a class="btn btn--primary" href="#months">See the monthly pattern <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CAROUSEL -->
+<section class="sec sec--white" data-theme="light" id="featured">
+  <div class="wrap">
+    <div class="sec__head" data-r>
+      <h2>The largest orders in this snapshot.</h2>
+      <a class="btn btn--primary" href="#orders">View all orders <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <p class="photo-context">Ohio nature photographs · Scenic context, not delivery locations. <a href="credits.html">Photo credits ↗</a></p>
+    <div class="benefits" data-r>
+      <div class="swiper" id="swiper"><div class="swiper-wrapper" id="slides"></div></div>
+      <div class="benefits__ctl">
+        <div class="swiper-scrollbar" id="sbar"></div>
+        <div class="benefits__btns"><button class="arrow is-prev" aria-label="Previous">←</button><button class="arrow is-next" aria-label="Next">→</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT / METHOD -->
+<section class="sec sec--dark about" data-theme="dark" id="about">
+  <div class="wrap about__grid">
+    <div class="about__l" data-r>
+      <div class="receipt">
+        <h4>City record</h4><div class="receipt__id">PO585255</div>
+        <div class="row"><span>Diesel line · qty 503</span><span>$2,152.94</span></div>
+        <div class="row"><span>Tax line</span><span>$399.00</span></div>
+        <div class="row tot"><span>PO total</span><span>$2,551.94</span></div>
+        <div class="row"><span>Invoice 118456COC26</span><span>$2,551.76</span></div>
+        <div class="row"><span>Accounting component</span><span>$398.82</span></div>
+        <div class="gap">$0.18 below the PO tax line. The public row doesn't say why, so it is shown, not judged.</div>
+      </div>
+      <a class="btn btn--primary" href="#sources">Our sources <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+    <div class="about__r">
+      <h2 data-r class="sr-only-lg">Built to be checked.</h2>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 4h11l3 3v13H5zM9 11h6M9 15h6"/></svg><div><h3>Public records only</h3><p>City Auditor records show the order and any linked invoice or accounting entries.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/></svg><div><h3>One supplier, fully traced</h3><p>Vendor 002166 only. These are public purchasing commitments—not all city fuel spending or a household fuel bill.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 20V5M6 5h11l-2 4 2 4H6"/></svg><div><h3>Flags, not accusations</h3><p>A missing invoice match means follow up. It does not prove an incorrect bill. No matched order crosses the $25 review threshold in this snapshot.</p></div></article>
+      <article class="point" data-r><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 3 4 7v5c0 4.5 3.2 7.8 8 9 4.8-1.2 8-4.5 8-9V7z"/><path d="m9 12 2 2 4-4"/></svg><div><h3>Limits stated up front</h3><p>The award (PA008056, to Sept 30, 2027) is context, not proof an order used it. No bills of lading or daily contract index, so delivery and final per-gallon charge are unverified.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- MONTHS  (light panel + embedded tool on the right, like the configurator) -->
+<section class="sec sec--light" data-theme="light" id="months">
+  <div class="wrap">
+    <div class="panel panel--grey split split--rev">
+      <div class="split__txt" data-r>
+        <h2>Build your own view of the year.</h2>
+        <p>Pick gallons, fuel dollars or order count, then a month. This snapshot covers January–October 2026, grouped by listed order-line date—not confirmed delivery.</p>
+        <a class="btn btn--primary" href="#snapshot">The snapshot in numbers <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      </div>
+      <div class="tool tool--chart" data-r>
+        <div class="tool__bar"><b>Monthly buying</b>
+          <div class="seg" role="group" aria-label="Measure">
+            <button type="button" data-m="ordered_gallons" aria-pressed="true">Gallons</button>
+            <button type="button" data-m="po_fuel_amount" aria-pressed="false">Fuel $</button>
+            <button type="button" data-m="orders_count" aria-pressed="false">Orders</button>
+          </div>
+        </div>
+        <div class="bars" id="bars"></div>
+        <div class="months" id="monthLabels" aria-hidden="true"></div>
+        <div class="mdetail" id="mdetail" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SNAPSHOT (full-bleed band, like the video section) -->
+<header class="snap" data-theme="dark" id="snapshot">
+  <img class="snap__art" src="assets/lake-erie.jpg" alt="Sunset over Lake Erie near Cleveland, Ohio" loading="lazy">
+  <div class="snap__shade"></div>
+  <div class="wrap snap__in">
+    <p class="eyebrow-l">Snapshot · <span data-asof>Nov 5, 2026</span></p>
+    <h2 id="snapHead">348 purchase orders. <span>379,459 gallons.</span> One supplier.</h2>
+    <div class="snap__stats">
+      <div><b data-count="348" data-bind="orders">348</b><span>supplier purchase orders</span></div>
+      <div><b data-count="379459" data-stat="ordered_gallons">379,459</b><span>diesel gallons ordered*</span></div>
+      <div><b>$<span data-count="1.46" data-dec="2" data-stat="fuel_millions">1.46</span>M</b><span>in diesel fuel-line amounts</span></div>
+      <div><b><span data-count="95.4" data-dec="1" data-stat="match_percent">95.4</span>%</b><span>matched to an invoice</span></div>
+    </div>
+    <p class="snapshot-note">*Gallons are inferred from order quantities; delivery is unverified. Fuel-line amounts exclude tax and other fuel types. <a href="credits.html">Lake Erie photo credit ↗</a></p>
+  </div>
+</header>
+
+<!-- REBUILD CTA -->
+<header class="sec sec--dark build" data-theme="dark" id="rebuild">
+  <div class="wrap build__grid">
+    <div data-r>
+      <h2>Rebuild the numbers yourself.</h2>
+      <p>Python 3 and a network connection. The script downloads the current public CSVs, rebuilds <code>data.json</code> and every figure on this page follows.</p>
+      <div class="btnrow"><a class="btn btn--primary" href="https://github.com/alexly0329-cpu/cmh_diesel_monitor" rel="noopener">Open the repository <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a></div>
+    </div>
+    <pre class="term" data-r aria-label="Commands"><span class="c"># rebuild the data</span>
+python3 src/build_data.py
+
+<span class="c"># serve it</span>
+python3 -m http.server 8000 --directory site
+
+<span class="c"># check the joins</span>
+python3 -m unittest discover -s tests -v</pre>
+  </div>
+</header>
+
+<!-- SOURCES / CONTACT -->
+<section class="sec sec--light" data-theme="light" id="sources">
+  <div class="wrap src">
+    <div class="src__l" data-r>
+      <h2>Check it against the record.</h2>
+      <p class="live"><i class="dot" data-dot></i><span data-fresh>Snapshot retrieved Nov 5, 2026</span></p>
+      <p>Every figure carries source IDs. Open the public files, the bid notice and the council ordinances behind the story.</p>
+    </div>
+    <div class="src__list" data-r>
+      <a href="https://www.columbusauditor.org/Data-Hub/" rel="noopener"><small>Data</small><div><strong>City Auditor Data Hub</strong><span>PO lines, invoice journals, accounting distributions</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://www.columbus.gov/files/sharedassets/city/v/1/city-council/documents/city-bulletins/2025/bulletin20250517_1.pdf" rel="noopener"><small>Bid</small><div><strong>RFQ030275 bid notice</strong><span>About 600,000 gal/yr across three diesel products · May 17, 2025</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://columbus.legistar.com/LegislationDetail.aspx?FullText=1&GUID=E32AE369-3AFA-4D83-8652-ADF077FCE64D&ID=7444913" rel="noopener"><small>Award</small><div><strong>Ordinance 1557-2025</strong><span>Fuel option contract award · July 2, 2025</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+      <a href="https://columbus.legistar.com/LegislationDetail.aspx?G=4F637594-17B0-4E92-8196-37F14328D337&GUID=B7CCB628-B1C1-4036-917A-525C92C3DE0D&ID=7923564" rel="noopener"><small>Funding</small><div><strong>Ordinance 0324-2026</strong><span>Fuel purchase authorization, PA008056 · Feb 25, 2026</span></div><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 11.5 11.5 4.5M5.5 4.5h6v6"/></svg></a>
+    </div>
+  </div>
+</section>
+</main>
+</div><!-- /page -->
+
+<!-- reveal footer -->
+<footer class="foot" data-theme="dark">
+  <div class="wrap foot__in">
+    <div class="foot__top">
+      <div class="foot__col"><h4>Explore</h4><a href="#orders">Order explorer</a><a href="#featured">Largest orders</a><a href="#months">Monthly view</a></div>
+      <div class="foot__col"><h4>Understand</h4><a href="#about">Method</a><a href="#snapshot">Snapshot</a><a href="#sources">Sources</a></div>
+      <div class="foot__col"><h4>Project</h4><a href="credits.html">Photo &amp; map credits</a><a href="https://github.com/alexly0329-cpu/cmh_diesel_monitor" rel="noopener">GitHub</a><a href="https://www.columbusauditor.org/Data-Hub/" rel="noopener">City Data Hub</a></div>
+    </div>
+    <div class="foot__big" aria-hidden="true">Columbus Diesel<br>Order Monitor</div>
+    <div class="foot__legal"><span>Independent portfolio case study. Not affiliated with the City of Columbus, any fuel supplier or producer, or any private company.</span><span>Data as of <span data-asof>Nov 5, 2026</span></span></div>
+  </div>
+</footer>
+
+<!-- record dialog -->
+<dialog class="dlg" id="dlg" aria-labelledby="dlgTitle">
+  <form method="dialog"><button class="dlg__x" aria-label="Close">✕</button></form>
+  <div id="dlgBody"></div>
+</dialog>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="vendor/lenis.min.js"></script>
+<script src="vendor/swiper-bundle.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
+
